@@ -1,9 +1,11 @@
 package com.peerdeps.peerdepsapi.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
@@ -32,6 +34,8 @@ public class User implements Serializable {
   private String username;
   @Timestamp
   private Instant birthdate;
+  @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+  private Budget budget;
 
   public enum Sex {
     M, F
