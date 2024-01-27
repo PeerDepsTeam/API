@@ -3,14 +3,13 @@ openapi: 3.0.3
 info:
   title: finan-smart
   description: Online financial management
-  version: 'latest'
+  version: "latest"
 
 servers:
-  - url: 'https://localhost:8080'
-
+  - url: "https://localhost:8080"
 
 paths:
-  '/ping':
+  "/ping":
     get:
       operationId: ping
       tags:
@@ -23,7 +22,7 @@ paths:
               schema:
                 type: string
                 example: pong
-  '/signup':
+  "/signup":
     post:
       tags:
         - Security
@@ -41,9 +40,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-        '500':
-          $ref: '#/components/responses/500'
-  '/signin':
+        "500":
+          $ref: "#/components/responses/500"
+  "/signin":
     get:
       tags:
         - Security
@@ -51,20 +50,20 @@ paths:
       description: User authentication with google
       responses:
         200:
-          description: User autehenticated
+          description: The Authenticated user.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-        '500':
-          $ref: '#/components/responses/500'
+        "500":
+          $ref: "#/components/responses/500"
 
-  '/users':
+  "/users":
     get:
       tags:
         - User
       operationId: getUsers
-      description: List of all users order by budget descendante
+      description: List of all users ordered by budget descendant
       parameters:
         - in: query
           name: page
@@ -85,15 +84,15 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-        '500':
-          $ref: '#/components/responses/500'
+        "500":
+          $ref: "#/components/responses/500"
 
-  '/users/{user_id}':
+  "/users/{user_id}":
     get:
       tags:
         - User
-      operationId: getUser
-      description: List all ZDJ
+      description: Get user by identifier;
+      operationId: getUserById
       parameters:
         - in: path
           name: user_id
@@ -102,14 +101,14 @@ paths:
             type: string
       responses:
         200:
-          description: Required user
+          description: The identified user.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
-        '500':
-          $ref: '#/components/responses/500'
-  '/users/{id}/transactions':
+        "500":
+          $ref: "#/components/responses/500"
+  "/users/{id}/transactions":
     get:
       tags:
         - User
@@ -141,10 +140,10 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Transaction"
-        '500':
-          $ref: '#/components/responses/500'
+        "500":
+          $ref: "#/components/responses/500"
 
-  '/courses':
+  "/courses":
     get:
       tags:
         - Activity
@@ -170,17 +169,17 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Course"
-        '500':
-          $ref: '#/components/responses/500'
+        "500":
+          $ref: "#/components/responses/500"
 
 components:
   responses:
-    '500':
+    "500":
       description: Internal server error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/InternalServerException'
+            $ref: "#/components/schemas/InternalServerException"
 
   schemas:
     Exception:
@@ -192,7 +191,7 @@ components:
           type: string
     InternalServerException:
       allOf:
-        - $ref: '#/components/schemas/Exception'
+        - $ref: "#/components/schemas/Exception"
       example:
         type: InternalServerException
         message: Unexpected error
@@ -206,6 +205,8 @@ components:
         lastName:
           type: string
         sex:
+          $ref: "#/components/schemas/Sex"
+        email:
           type: string
         username:
           type: string
@@ -213,7 +214,12 @@ components:
           type: string
           format: date-time
         budget:
-          $ref: '#/components/schemas/Budget'
+          $ref: "#/components/schemas/Budget"
+    Sex:
+      type: string
+      enum:
+        - M
+        - F
     Budget:
       type: object
       properties:
@@ -226,7 +232,7 @@ components:
         currentCapital:
           type: number
         savings:
-          $ref: '#/components/schemas/Saving'
+          $ref: "#/components/schemas/Saving"
     Saving:
       type: object
       properties:
