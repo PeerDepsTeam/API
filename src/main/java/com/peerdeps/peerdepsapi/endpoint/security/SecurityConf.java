@@ -22,7 +22,9 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.OPTIONS;
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +55,7 @@ public class SecurityConf {
                 new NegatedRequestMatcher(
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping"),
-                        new AntPathRequestMatcher("/signup"),
+                        new AntPathRequestMatcher("/auth"),
                         new AntPathRequestMatcher("/users"),
                         new AntPathRequestMatcher("/courses"),
                         new AntPathRequestMatcher("/**", OPTIONS.toString())
@@ -62,13 +64,13 @@ public class SecurityConf {
         .anonymous()
         .and()
         .authorizeRequests()
-        .requestMatchers(HttpMethod.GET, "/ping").permitAll()
-        .requestMatchers(HttpMethod.GET, "/users").permitAll()
-        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
-        .requestMatchers(HttpMethod.GET, "/courses").permitAll()
-        .requestMatchers(HttpMethod.GET, "/courses/**").authenticated()
-        .requestMatchers(HttpMethod.GET, "/signin").authenticated()
-        .requestMatchers(HttpMethod.POST, "/signup").permitAll()
+        .requestMatchers(GET, "/ping").permitAll()
+        .requestMatchers(GET, "/users").permitAll()
+        .requestMatchers(GET, "/users/**").authenticated()
+        .requestMatchers(GET, "/courses").permitAll()
+        .requestMatchers(GET, "/courses/**").authenticated()
+        .requestMatchers(GET, "/signin").authenticated()
+        .requestMatchers(GET, "/auth").permitAll()
         .anyRequest()
         .denyAll()
         .and();

@@ -17,11 +17,11 @@ public class BalanceCalculator {
     var incomeAmount = transactions.stream()
         .filter(trans -> trans.getType().equals(Transaction.TransactionType.INCOME))
         .map(Transaction::getAmount)
-        .reduce(Double::sum).get();
+        .reduce(Double::sum).orElse(0.0);
     var outcomeAmount = transactions.stream()
         .filter(trans -> trans.getType().equals(Transaction.TransactionType.OUTCOME))
         .map(Transaction::getAmount)
-        .reduce(Double::sum).get();
+        .reduce(Double::sum).orElse(0.0);
     var currentBalance = user.getBudget().getInitialCapital() - outcomeAmount + incomeAmount;
     user.getBudget().setCurrentCapital(currentBalance);
     return user;

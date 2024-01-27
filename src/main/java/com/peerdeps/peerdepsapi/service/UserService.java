@@ -45,6 +45,6 @@ public class UserService {
 
   public User createUser(User user) {
     var saved = repository.save(user);
-    return balanceCalculator.computeBalance(user);
+    return balanceCalculator.computeBalance(saved);
   }
 }
