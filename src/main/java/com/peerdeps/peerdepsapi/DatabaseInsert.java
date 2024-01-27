@@ -7,6 +7,7 @@ import com.peerdeps.peerdepsapi.model.User;
 import com.peerdeps.peerdepsapi.repository.TransactionRepository;
 import com.peerdeps.peerdepsapi.repository.UserRepository;
 import java.time.Instant;
+import java.util.Random;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,10 @@ public class DatabaseInsert implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     for (int i = 1; i <= 10; i++) {
+      Random random = new Random();
+      var income =  10 + (500 - 10) * random.nextDouble();
+      var outcome =  10 + (500 - 10) * random.nextDouble();
+
       User user = new User();
       user.setId(String.valueOf(i));
       user.setFirstName("FirstName" + i);
@@ -32,6 +37,7 @@ public class DatabaseInsert implements CommandLineRunner {
       Budget budget = new Budget();
       budget.setId(String.valueOf(i));
       budget.setUserId(user.getId());
+      budget.setInitialCapital(10000.0);
 
       Savings savings = new Savings();
       savings.setId(String.valueOf(i));
@@ -43,7 +49,7 @@ public class DatabaseInsert implements CommandLineRunner {
       Transaction incomeTransaction = new Transaction();
       incomeTransaction.setId("income" + i);
       incomeTransaction.setUser(user);
-      incomeTransaction.setAmount(100.0 * i);
+      incomeTransaction.setAmount(income * i);
       incomeTransaction.setCreationDatetime(Instant.now());
       incomeTransaction.setType(Transaction.TransactionType.INCOME);
 
@@ -52,7 +58,7 @@ public class DatabaseInsert implements CommandLineRunner {
       Transaction outcomeTransaction = new Transaction();
       outcomeTransaction.setId("outcome" + i);
       outcomeTransaction.setUser(user);
-      outcomeTransaction.setAmount(50.0 * i);
+      outcomeTransaction.setAmount(outcome * i);
       outcomeTransaction.setCreationDatetime(Instant.now());
       outcomeTransaction.setType(Transaction.TransactionType.OUTCOME);
 

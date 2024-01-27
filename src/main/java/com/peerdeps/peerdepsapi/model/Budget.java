@@ -30,9 +30,4 @@ public class Budget implements Serializable {
   private Double currentCapital;
   @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
   private Savings savings;
-
-  @PrePersist
-  public void initialCapital(){
-    initialCapital = 10000.0;
-  }
 }
