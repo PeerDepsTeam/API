@@ -3,6 +3,7 @@ package com.peerdeps.peerdepsapi.service;
 import com.peerdeps.peerdepsapi.model.exception.NotFoundException;
 import com.peerdeps.peerdepsapi.repository.UserRepository;
 import com.peerdeps.peerdepsapi.model.User;
+import com.peerdeps.peerdepsapi.service.calculator.BalanceCalculator;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserService {
   private final UserRepository repository;
+  private final BalanceCalculator balanceCalculator;
 
   public User findById(String userId){
-    return repository.findById(userId)
+    var user =  repository.findById(userId)
         .orElseThrow(()->new NotFoundException("User."+userId+" is not found"));
+    return balanceCalculator.computeBalance(user);
   }
 
   public User getUserByFirebaseIdAndEmail(String uid, String email) {
