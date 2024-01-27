@@ -36,11 +36,12 @@ public class AuthFilter extends AbstractAuthenticationProcessingFilter {
     FirebaseToken authUser = firebaseService.getUserByBearer(token);
     if (authUser != null) {
       log.info("Authenticated user {}", authUser.getEmail());
-      User user = userService.getUserByFirebaseIdAndEmail(authUser.getUid(), authUser.getEmail());
+      User user = userService.getUserByEmail(authUser.getEmail());
       UsernamePasswordAuthenticationToken authentication =
           new UsernamePasswordAuthenticationToken(user, token);
       authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-      return getAuthenticationManager().authenticate(authentication);
+      var auth = getAuthenticationManager().authenticate(authentication);
+      return auth;
     }
     throw new ForbiddenException("Access denied");
   }

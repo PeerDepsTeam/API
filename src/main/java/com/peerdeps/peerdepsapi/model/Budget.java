@@ -1,6 +1,7 @@
 package com.peerdeps.peerdepsapi.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -25,6 +26,7 @@ public class Budget implements Serializable {
   private String id;
   @JoinColumn(referencedColumnName = "id")
   private String userId;
+  @Column(columnDefinition = "double default 10000")
   private Double initialCapital;
   @Transient
   private Double currentCapital;

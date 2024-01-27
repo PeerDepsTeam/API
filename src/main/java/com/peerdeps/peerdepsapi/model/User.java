@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder(toBuilder = true)
 @EqualsAndHashCode
 @ToString
 public class User implements Serializable {

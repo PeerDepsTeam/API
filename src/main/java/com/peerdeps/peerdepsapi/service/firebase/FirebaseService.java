@@ -16,19 +16,32 @@ import static com.peerdeps.peerdepsapi.model.exception.ApiException.ExceptionTyp
 
 @Configuration
 public class FirebaseService {
+
+  private static final Object lock = new Object();
+  private static boolean firebaseAppInitialized = false;
+
   public final String privateKey;
 
   public FirebaseService(@Value("${firebase.private.key}") String privateKey) {
     this.privateKey = privateKey;
+    initializeFirebaseApp();
+  }
+
+  private void initializeFirebaseApp() {
+    synchronized (lock) {
+      if (!firebaseAppInitialized) {
+        FirebaseOptions options =
+            new FirebaseOptions.Builder().setCredentials(getCredentials()).build();
+
+        FirebaseApp.initializeApp(options);
+        firebaseAppInitialized = true;
+      }
+    }
   }
 
   @SneakyThrows
   private FirebaseAuth auth() {
-    FirebaseOptions options =
-        new FirebaseOptions.Builder().setCredentials(getCredentials()).build();
-
-    var app = FirebaseApp.initializeApp(options);
-    return FirebaseAuth.getInstance(app);
+    return FirebaseAuth.getInstance();
   }
 
   @SneakyThrows
@@ -45,3 +58,4 @@ public class FirebaseService {
     }
   }
 }
+

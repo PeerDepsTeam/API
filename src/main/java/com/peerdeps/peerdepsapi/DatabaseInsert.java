@@ -71,6 +71,29 @@ public class DatabaseInsert implements CommandLineRunner {
       userRepository.save(user);
     }
 
+    User user = new User();
+    user.setId("user");
+    user.setFirstName("FirstName");
+    user.setLastName("LastName");
+    user.setEmail("test@gmail.com");
+    user.setSex(User.Sex.M);
+    user.setUsername("user");
+    user.setBirthdate(Instant.now());
+
+    Budget budget = new Budget();
+    budget.setId("bgd");
+    budget.setUserId(user.getId());
+    budget.setInitialCapital(10000.0);
+
+    Savings savings = new Savings();
+    savings.setId("svg");
+    savings.setAmount(50.0);
+
+    budget.setSavings(savings);
+    user.setBudget(budget);
+
+    userRepository.save(user);
+
     Course course3 = new Course();
     course3.setId("course3");
     course3.setModule("Investing Principles for Beginners");

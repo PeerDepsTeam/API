@@ -8,6 +8,8 @@ ARG DB_NAME
 ENV DB_NAME=$DB_NAME
 ARG DB_PASSWORD
 ENV DB_PASSWORD=$DB_PASSWORD
+ARG FB_KEY
+ENV FB_KEY=$FB_KEY
 
 # Change permissions for gradlew
 RUN chmod +x ./gradlew

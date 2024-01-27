@@ -23,8 +23,9 @@ public class UserService {
     return balanceCalculator.computeBalance(user);
   }
 
-  public User getUserByFirebaseIdAndEmail(String uid, String email) {
-    return null;
+  public User getUserByEmail(String email) {
+    return repository.findByEmail(email)
+        .orElseThrow(()->new NotFoundException("User."+email+" is not found"));
   }
 
   public List<User> findAll(Integer page, Integer pageSize){
@@ -42,4 +43,8 @@ public class UserService {
     return user.getBudget().getCurrentCapital();
   }
 
+  public User createUser(User user) {
+    var saved = repository.save(user);
+    return balanceCalculator.computeBalance(user);
+  }
 }

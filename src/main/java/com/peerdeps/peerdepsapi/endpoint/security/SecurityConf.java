@@ -64,6 +64,7 @@ public class SecurityConf {
         .requestMatchers(HttpMethod.GET, "/ping").permitAll()
         .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/courses/**").permitAll()
+        .requestMatchers(HttpMethod.GET, "/signin").authenticated()
         .anyRequest()
         .denyAll()
         .and();

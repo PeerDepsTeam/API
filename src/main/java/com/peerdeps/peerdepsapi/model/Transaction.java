@@ -1,6 +1,7 @@
 package com.peerdeps.peerdepsapi.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,6 +27,7 @@ public class Transaction implements Serializable {
   private String id;
   @ManyToOne(cascade = CascadeType.ALL)
   private User user;
+  @Column(columnDefinition = "double default 0")
   private Double amount;
   @Timestamp
   private Instant creationDatetime;
