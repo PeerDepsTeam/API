@@ -2,7 +2,9 @@ package com.peerdeps.peerdepsapi;
 
 import com.peerdeps.peerdepsapi.model.Budget;
 import com.peerdeps.peerdepsapi.model.Savings;
+import com.peerdeps.peerdepsapi.model.Transaction;
 import com.peerdeps.peerdepsapi.model.User;
+import com.peerdeps.peerdepsapi.repository.TransactionRepository;
 import com.peerdeps.peerdepsapi.repository.UserRepository;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class DatabaseInsert implements CommandLineRunner {
   private final UserRepository userRepository;
+  private final TransactionRepository transactionRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -36,6 +39,26 @@ public class DatabaseInsert implements CommandLineRunner {
 
       budget.setSavings(savings);
       user.setBudget(budget);
+
+      Transaction incomeTransaction = new Transaction();
+      incomeTransaction.setId("income" + i);
+      incomeTransaction.setUser(user);
+      incomeTransaction.setAmount(100.0 * i);
+      incomeTransaction.setCreationDatetime(Instant.now());
+      incomeTransaction.setType(Transaction.TransactionType.INCOME);
+
+      transactionRepository.save(incomeTransaction);
+
+      Transaction outcomeTransaction = new Transaction();
+      outcomeTransaction.setId("outcome" + i);
+      outcomeTransaction.setUser(user);
+      outcomeTransaction.setAmount(50.0 * i);
+      outcomeTransaction.setCreationDatetime(Instant.now());
+      outcomeTransaction.setType(Transaction.TransactionType.OUTCOME);
+
+      transactionRepository.save(outcomeTransaction);
+
+      transactionRepository.save(incomeTransaction);
 
       userRepository.save(user);
     }
