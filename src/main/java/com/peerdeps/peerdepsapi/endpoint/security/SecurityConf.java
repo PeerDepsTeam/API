@@ -80,13 +80,17 @@ public class SecurityConf {
 
   private AuthFilter bearerFilter(RequestMatcher requestMatcher) throws Exception {
     AuthFilter bearerFilter = new AuthFilter(requestMatcher, firebaseService, userService);
-    //bearerFilter.setAuthenticationManager(authenticationManager());
+    bearerFilter.setAuthenticationManager(authenticationManager());
     bearerFilter.setAuthenticationSuccessHandler(
         (httpServletRequest, httpServletResponse, authentication) -> {});
     bearerFilter.setAuthenticationFailureHandler(
         (req, res, e) ->
             exceptionResolver.resolveException(req, res, null, forbiddenWithRemoteInfo(e, req)));
     return bearerFilter;
+  }
+
+  protected AuthenticationManager authenticationManager() {
+    return new ProviderManager(provider);
   }
 
 
