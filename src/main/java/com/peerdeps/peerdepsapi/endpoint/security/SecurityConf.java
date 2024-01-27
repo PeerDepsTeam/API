@@ -53,6 +53,7 @@ public class SecurityConf {
                 new NegatedRequestMatcher(
                     new OrRequestMatcher(
                         new AntPathRequestMatcher("/ping"),
+                        new AntPathRequestMatcher("/auth"),
                         new AntPathRequestMatcher("/users/**"),
                         new AntPathRequestMatcher("/courses/**"),
                         new AntPathRequestMatcher("/**", OPTIONS.toString())
@@ -65,6 +66,7 @@ public class SecurityConf {
         .requestMatchers(HttpMethod.GET, "/users/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/courses/**").permitAll()
         .requestMatchers(HttpMethod.GET, "/signin").authenticated()
+        .requestMatchers(HttpMethod.GET, "/auth").permitAll()
         .anyRequest()
         .denyAll()
         .and();
