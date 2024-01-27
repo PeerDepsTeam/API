@@ -16,4 +16,7 @@ public class UserService {
         .orElseThrow(()->new NotFoundException("User."+userId+" is not found"));
   }
 
+  public User getUserByFirebaseIdAndEmail(String uid, String email) {
+    return null;
+  }
 }

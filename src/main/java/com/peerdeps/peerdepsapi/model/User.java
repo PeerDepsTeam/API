@@ -1,7 +1,10 @@
 package com.peerdeps.peerdepsapi.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
 import jdk.jfr.Timestamp;
@@ -11,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Table(name = "\"user\"")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,8 +26,14 @@ public class User implements Serializable {
   private String id;
   private String firstName;
   private String lastName;
-  private String sex;
+  private String email;
+  @Enumerated(EnumType.STRING)
+  private Sex sex;
   private String username;
   @Timestamp
   private Instant birthdate;
+
+  public enum Sex {
+    M, F
+  }
 }
